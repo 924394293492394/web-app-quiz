@@ -28,4 +28,18 @@ router.get('/quizzes', async (req, res) => {
     }
 });
 
+// Получение опроса по ID
+router.get('/quizzes/:id', async (req, res) => {
+    try {
+        const quiz = await Quiz.findById(req.params.id);
+        if (!quiz) {
+            return res.status(404).json({ message: 'Опрос не найден' });
+        }
+        res.status(200).json(quiz);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = router;

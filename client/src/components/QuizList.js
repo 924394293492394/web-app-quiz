@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const QuizList = () => {
     const [quizzes, setQuizzes] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchQuizzes = async () => {
@@ -22,7 +24,13 @@ const QuizList = () => {
             <h2>Список всех опросов</h2>
             <ul>
                 {quizzes.map((quiz) => (
-                    <li key={quiz._id}>{quiz.title}</li>
+                    <li
+                        key={quiz._id}
+                        onClick={() => navigate(`/quiz/${quiz._id}`)}
+                        style={{ cursor: 'pointer', marginBottom: '5px', color: 'blue', textDecoration: 'underline' }}
+                    >
+                        {quiz.title}
+                    </li>
                 ))}
             </ul>
         </div>
