@@ -1,28 +1,30 @@
 const express = require('express');
 const Quiz = require('../models/Quiz');
-
 const router = express.Router();
 
-// Создание квиза
-router.post('/', async (req, res) => {
+// Создание нового квиза
+router.post('/quizzes', async (req, res) => {
+    const { title, questions } = req.body;
+
+    const quiz = new Quiz({ title, questions });
+
     try {
-        const quizzes = req.body.quizzes;
-        const savedQuizzes = await Quiz.insertMany(quizzes);
-        res.status(201).json(savedQuizzes);
+        const savedQuiz = await quiz.save();
+        res.status(201).json(savedQuiz);
     } catch (error) {
-        console.error('Ошибка при создании квизов:', error);
-        res.status(500).json({ message: 'Ошибка сервера' });
+        console.error(error);
+        res.status(400).json({ message: error.message }); 
     }
 });
 
 // Получение всех квизов
-router.get('/', async (req, res) => {
+router.get('/quizzes', async (req, res) => {
     try {
         const quizzes = await Quiz.find();
-        res.json(quizzes);
+        res.status(200).json(quizzes);
     } catch (error) {
-        console.error('Ошибка при получении квизов:', error);
-        res.status(500).json({ message: 'Ошибка сервера' });
+        console.error(error);
+        res.status(500).json({ message: error.message });
     }
 });
 

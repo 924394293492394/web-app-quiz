@@ -1,25 +1,24 @@
 const express = require('express');
-const cors = require('cors');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const quizRoutes = require('./routes/quizRoutes');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+
+// Подключение к MongoDB
+mongoose.connect('mongodb://localhost:27017/quiz-app', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+    .then(() => console.log('MongoDB connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
 
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/quizapp', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('Подключение к MongoDB успешно');
-}).catch(err => {
-    console.error('Ошибка подключения к MongoDB:', err);
-});
-
-app.use('/api/quizzes', quizRoutes);
+app.use('/api', quizRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Сервер запущен на http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
