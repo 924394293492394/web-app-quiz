@@ -42,4 +42,18 @@ router.get('/quizzes/:id', async (req, res) => {
     }
 });
 
+// Удаление опроса по ID
+router.delete('/quizzes/:id', async (req, res) => {
+    try {
+        const deletedQuiz = await Quiz.findByIdAndDelete(req.params.id);
+        if (!deletedQuiz) {
+            return res.status(404).json({ message: 'Опрос не найден' });
+        }
+        res.status(200).json({ message: 'Опрос удален' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = router;
