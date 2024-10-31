@@ -1,30 +1,45 @@
-const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 // Регистрация пользователя
 exports.register = async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
-    const user = new User({ username, email, password });
-    await user.save();
-    res.status(201).json({ message: 'Пользователь успешно зарегистрирован' });
-  } catch (error) {
-    res.status(400).json({ message: 'Ошибка при регистрации пользователя', error });
-  }
-};
-
-// Аутентификация пользователя
-exports.login = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user || !(await user.comparePassword(password))) {
-      return res.status(401).json({ message: 'Недействительные учетные данные' });
+    try {
+      const { username, email, password } = req.body;
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
+      }
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = new User({ username, email, password: hashedPassword });
+      await user.save();
+      res.status(201).json({ message: 'Регистрация успешна' });
+    } catch (error) {
+      console.error("Ошибка в процессе регистрации:", error);
+      res.status(500).json({ message: 'Ошибка сервера' });
     }
+  };
 
-    const token = jwt.sign({ id: user._id }, 'Ваш токен', { expiresIn: '1h' });
-    res.json({ token });
-  } catch (error) {
-    res.status(500).json({ message: 'Ошибка при входе в систему', error });
-  }
-};
+// Авторизация пользователя
+exports.login = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ message: 'Неверный email или пароль' });
+      }
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(400).json({ message: 'Неверный email или пароль' });
+      }
+      const token = jwt.sign(
+        { userId: user._id, username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+      res.status(200).json({ token });
+    } catch (error) {
+      console.error("Ошибка в процессе авторизации:", error);
+      res.status(500).json({ message: 'Ошибка сервера' });
+    }
+  };
