@@ -7,36 +7,41 @@ const useDeleteQuizLogic = () => {
     useEffect(() => {
         const fetchQuizzes = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/quizzes');
-                const data = await response.json();
-                setQuizzes(data);
+              const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/quizzes`, {
+                headers: {
+                  'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+              });
+              const data = await response.json();
+              setQuizzes(data);
             } catch (error) {
-                console.error('Ошибка при загрузке опросов:', error);
+              console.error('Ошибка при загрузке опросов:', error);
             }
-        };
+          };
 
         fetchQuizzes();
     }, []);
 
     const handleDeleteQuiz = async () => {
         if (!selectedQuizId) return;
-
         try {
-            const response = await fetch(`http://localhost:5000/api/quizzes/${selectedQuizId}`, {
-                method: 'DELETE',
-            });
-            
-            if (response.ok) {
-                setQuizzes(quizzes.filter((quiz) => quiz._id !== selectedQuizId));
-                setSelectedQuizId('');
-                alert('Опрос успешно удален');
-            } else {
-                console.error('Ошибка при удалении опроса');
-            }
+          const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/quizzes/${selectedQuizId}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+          });
+          if (response.ok) {
+            setQuizzes(quizzes.filter((quiz) => quiz._id !== selectedQuizId));
+            setSelectedQuizId('');
+            alert('Опрос успешно удален');
+          } else {
+            console.error('Ошибка при удалении опроса');
+          }
         } catch (error) {
-            console.error('Ошибка:', error);
+          console.error('Ошибка:', error);
         }
-    };
+      };
 
     return {
         quizzes,

@@ -7,7 +7,11 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: '*' //вкл для всех источников
+}));
+
+app.use(express.json());
 
 // Подключение к MongoDB
 mongoose.connect('mongodb://localhost:27017/quiz-app', { useNewUrlParser: true, useUnifiedTopology: true })

@@ -18,7 +18,7 @@ const Login = () => {
     e.preventDefault();
     setError('');
     try {
-      const response = await fetch('http://localhost:5000/auth/login', {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,18 +35,31 @@ const Login = () => {
       setError(err.message || 'Ошибка входа');
     }
   };
-  
 
   return (
     <div>
       <h2>Вход</h2>
       <form onSubmit={handleSubmit}>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Пароль"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
         <button type="submit">Войти</button>
       </form>
       {error && <p>{error}</p>}
-      <p>Нет аккаунта? <Link to="/register">Создать аккаунт</Link></p>
+      <p>
+        Нет аккаунта? <Link to="/register">Создать аккаунт</Link>
+      </p>
     </div>
   );
 };

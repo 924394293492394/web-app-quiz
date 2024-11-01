@@ -47,27 +47,28 @@ export const useCreateQuizLogic = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log('Отправка формы');
         const quizData = { title, questions };
-
         try {
-            const response = await fetch('http://localhost:5000/api/quizzes', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(quizData),
-            });
-
-            if (response.ok) {
-                setTitle('');
-                setQuestions([{ question: '', answers: ['', '', '', ''], correctAnswer: 0 }]);
-            } else {
-                console.error('Ошибка при создании опроса');
-            }
+          const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/quizzes`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify(quizData),
+          });
+          if (response.ok) {
+            console.log('Опрос успешно создан');
+            setTitle('');
+            setQuestions([{ question: '', answers: ['', '', '', ''], correctAnswer: 0 }]);
+          } else {
+            console.error('Ошибка при создании опроса');
+          }
         } catch (error) {
-            console.error('Ошибка:', error);
+          console.error('Ошибка:', error);
         }
-    };
+    };          
 
     const resetForm = () => {
         setTitle('');
