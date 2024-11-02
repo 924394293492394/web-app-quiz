@@ -11,6 +11,26 @@ const useQuizLogic = (quiz) => {
         });
     };
 
+    const handleQuizCompletion = async (quizId, score, total) => {
+        const completionRate = `${((score / total) * 100).toFixed(2)}%`;
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/quizzes/${quizId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: JSON.stringify({ completion_rate: completionRate }),
+            });
+            if (!response.ok) {
+                throw new Error('Ошибка при прохождении опроса');
+            }
+            console.log('Опрос успешно пройден');
+        } catch (error) {
+            console.error('Ошибка при прохождении опроса:', error);
+        }
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!quiz) return;
@@ -23,6 +43,7 @@ const useQuizLogic = (quiz) => {
         }, 0);
 
         setResults({ score, total: quiz.questions.length });
+        handleQuizCompletion(quiz._id, score, quiz.questions.length);
     };
 
     return { selectedAnswers, results, handleAnswerChange, handleSubmit };

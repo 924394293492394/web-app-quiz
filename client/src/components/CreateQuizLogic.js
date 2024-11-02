@@ -58,17 +58,18 @@ export const useCreateQuizLogic = () => {
             },
             body: JSON.stringify(quizData),
           });
+          console.log('Ответ сервера:', response);
           if (response.ok) {
             console.log('Опрос успешно создан');
             setTitle('');
             setQuestions([{ question: '', answers: ['', '', '', ''], correctAnswer: 0 }]);
           } else {
-            console.error('Ошибка при создании опроса');
+            console.error('Ошибка при создании опроса:', await response.text());
           }
         } catch (error) {
           console.error('Ошибка:', error);
         }
-    };          
+    };      
 
     const resetForm = () => {
         setTitle('');

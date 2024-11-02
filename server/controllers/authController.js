@@ -1,22 +1,39 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const UserProfile = require('../models/UserProfile');
 
 // Регистрация пользователя
 exports.register = async (req, res) => {
     try {
-      const { username, email, password } = req.body;
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
-      }
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const user = new User({ username, email, password: hashedPassword });
-      await user.save();
-      res.status(201).json({ message: 'Регистрация успешна' });
+        const { username, email, password } = req.body;
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = new User({ username, email, password: hashedPassword });
+        await user.save();
+        
+        // Создадим профиль пользователя
+        const userProfile = new UserProfile({
+            username,
+            email,
+            registration_date: new Date(),
+            last_active_date: new Date(),
+            actions_history: {
+                viewed_surveys: [],
+                completed_surveys: [],
+                created_surveys: [],
+                deleted_surveys: []
+            }
+        });
+        await userProfile.save();
+
+        res.status(201).json({ message: 'Регистрация успешна' });
     } catch (error) {
-      console.error("Ошибка в процессе регистрации:", error);
-      res.status(500).json({ message: 'Ошибка сервера' });
+        console.error("Ошибка в процессе регистрации:", error);
+        res.status(500).json({ message: 'Ошибка сервера' });
     }
   };
 

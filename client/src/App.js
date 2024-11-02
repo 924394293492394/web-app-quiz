@@ -7,6 +7,7 @@ import CreateQuiz from './pages/CreateQuiz';
 import PassagePage from './pages/PassageQuiz';
 import DeleteQuiz from './pages/DeleteQuiz';
 import PrivateRoute from './components/PrivateRoute';
+import UserProfile from './components/UserProfile';
 
 function App() {
   return (
@@ -14,37 +15,45 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route 
-          path="/" 
+        <Route
+          path="/"
           element={
             <PrivateRoute>
               <Home />
             </PrivateRoute>
-          } 
+          }
         />
-        <Route 
-          path="/create" 
+        <Route
+          path="/create"
           element={
             <PrivateRoute>
               <CreateQuiz />
             </PrivateRoute>
-          } 
+          }
         />
-        <Route 
-          path="/quiz/:id" 
+        <Route
+          path="/quiz/:id"
           element={
             <PrivateRoute>
               <PassagePage />
             </PrivateRoute>
-          } 
+          }
         />
-        <Route 
-          path="/delete" 
+        <Route
+          path="/delete"
           element={
             <PrivateRoute>
               <DeleteQuiz />
             </PrivateRoute>
-          } 
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <UserProfile />
+            </PrivateRoute>
+          }
         />
       </Routes>
     </Router>
