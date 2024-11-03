@@ -10,7 +10,7 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: '*' //вкл для всех источников
+  origin: '*'
 }));
 
 app.use(express.json());
@@ -23,7 +23,7 @@ mongoose.connect('mongodb://localhost:27017/quiz-app', { useNewUrlParser: true, 
 app.use('/auth', authRoutes);
 app.use('/api', quizRoutes);
 app.use('/api', userProfileRoutes);
-app.use('/api', userActionsRoutes); // Подключаем маршруты для действий пользователя
+app.use('/api', userActionsRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

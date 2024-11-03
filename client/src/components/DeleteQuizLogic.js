@@ -5,22 +5,23 @@ const useDeleteQuizLogic = () => {
     const [selectedQuizId, setSelectedQuizId] = useState('');
 
     useEffect(() => {
-        const fetchQuizzes = async () => {
-            try {
-              const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/quizzes`, {
-                headers: {
-                  'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
+      const fetchQuizzes = async () => {
+          try {
+              const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/user-quizzes`, {
+                  headers: {
+                      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                  },
               });
               const data = await response.json();
               setQuizzes(data);
-            } catch (error) {
+          } catch (error) {
               console.error('Ошибка при загрузке опросов:', error);
-            }
-          };
-
-        fetchQuizzes();
-    }, []);
+          }
+      };
+  
+      fetchQuizzes();
+  }, []);
+    
 
     const handleDeleteQuiz = async () => {
         if (!selectedQuizId) return;

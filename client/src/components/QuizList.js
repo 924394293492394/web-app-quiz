@@ -24,9 +24,9 @@ function QuizList() {
                 setLoading(false);
             }
         }
-
+    
         loadQuizzes();
-    }, []);
+    }, []);    
 
     if (loading) {
         return <div>Загрузка...</div>;

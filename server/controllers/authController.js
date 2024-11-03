@@ -15,7 +15,7 @@ exports.register = async (req, res) => {
         const user = new User({ username, email, password: hashedPassword });
         await user.save();
         
-        // Создадим профиль пользователя
+        // Создание профиля пользователя
         const userProfile = new UserProfile({
             username,
             email,

@@ -40,30 +40,41 @@ router.post('/quizzes', authMiddleware, async (req, res) => {
   const { title, questions } = req.body;
   const username = req.user.username;
 
-  const quiz = new Quiz({ title, questions });
+  const quiz = new Quiz({ title, questions, creator: username });
 
   try {
-    const savedQuiz = await quiz.save();
-    console.log(`Создание опроса для пользователя: ${username}`);
-    await recordUserAction(username, 'created', savedQuiz._id.toString(), savedQuiz.title);
+      const savedQuiz = await quiz.save();
+      await recordUserAction(username, 'created', savedQuiz._id.toString(), savedQuiz.title);
 
-    res.status(201).json(savedQuiz);
+      res.status(201).json(savedQuiz);
   } catch (error) {
-    console.error(error);
-    res.status(400).json({ message: error.message });
+      console.error(error);
+      res.status(400).json({ message: error.message });
   }
 });
 
 // Получение всех опросов
 router.get('/quizzes', authMiddleware, async (req, res) => {
   try {
-    const quizzes = await Quiz.find();
-    res.status(200).json(quizzes);
+      const quizzes = await Quiz.find();
+      res.status(200).json(quizzes);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: error.message });
+      console.error(error);
+      res.status(500).json({ message: error.message });
   }
 });
+
+// Получение опросов пользователя
+router.get('/user-quizzes', authMiddleware, async (req, res) => {
+  try {
+      const quizzes = await Quiz.find({ creator: req.user.username });
+      res.status(200).json(quizzes);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: error.message });
+  }
+});
+
 
 // Получение опроса по ID
 router.get('/quizzes/:id', authMiddleware, async (req, res) => {
