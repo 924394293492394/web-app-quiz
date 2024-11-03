@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import CreateQuiz from './pages/CreateQuiz';
 import PassagePage from './pages/PassageQuiz';
 import DeleteQuiz from './pages/DeleteQuiz';
+import SelectQuizToEditPage from './pages/SelectQuizToEditPage';
+import EditQuizPage from './pages/EditQuiz';
 import PrivateRoute from './components/PrivateRoute';
 import UserProfile from './components/UserProfile';
 
@@ -44,6 +46,22 @@ function App() {
           element={
             <PrivateRoute>
               <DeleteQuiz />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit"
+          element={
+            <PrivateRoute>
+              <SelectQuizToEditPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit/:id"
+          element={
+            <PrivateRoute>
+              <EditQuizPage />
             </PrivateRoute>
           }
         />

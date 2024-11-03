@@ -35,24 +35,6 @@ async function recordUserAction(username, actionType, surveyId, surveyTitle, com
   }
 }
 
-// Создание нового опроса
-router.post('/quizzes', authMiddleware, async (req, res) => {
-  const { title, questions } = req.body;
-  const username = req.user.username;
-
-  const quiz = new Quiz({ title, questions, creator: username });
-
-  try {
-      const savedQuiz = await quiz.save();
-      await recordUserAction(username, 'created', savedQuiz._id.toString(), savedQuiz.title);
-
-      res.status(201).json(savedQuiz);
-  } catch (error) {
-      console.error(error);
-      res.status(400).json({ message: error.message });
-  }
-});
-
 // Получение всех опросов
 router.get('/quizzes', authMiddleware, async (req, res) => {
   try {
@@ -63,18 +45,6 @@ router.get('/quizzes', authMiddleware, async (req, res) => {
       res.status(500).json({ message: error.message });
   }
 });
-
-// Получение опросов пользователя
-router.get('/user-quizzes', authMiddleware, async (req, res) => {
-  try {
-      const quizzes = await Quiz.find({ creator: req.user.username });
-      res.status(200).json(quizzes);
-  } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: error.message });
-  }
-});
-
 
 // Получение опроса по ID
 router.get('/quizzes/:id', authMiddleware, async (req, res) => {
@@ -93,25 +63,32 @@ router.get('/quizzes/:id', authMiddleware, async (req, res) => {
   }
 });
 
-// Удаление опроса по ID
-router.delete('/quizzes/:id', authMiddleware, async (req, res) => {
-  const { id } = req.params;
+// Получение опросов пользователя
+router.get('/user-quizzes', authMiddleware, async (req, res) => {
+  try {
+      const quizzes = await Quiz.find({ creator: req.user.username });
+      res.status(200).json(quizzes);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: error.message });
+  }
+});
+
+// Создание нового опроса
+router.post('/quizzes', authMiddleware, async (req, res) => {
+  const { title, questions } = req.body;
   const username = req.user.username;
 
+  const quiz = new Quiz({ title, questions, creator: username });
+
   try {
-    const quiz = await Quiz.findById(id);
-    if (!quiz) {
-      return res.status(404).json({ message: 'Опрос не найден' });
-    }
+      const savedQuiz = await quiz.save();
+      await recordUserAction(username, 'created', savedQuiz._id.toString(), savedQuiz.title);
 
-    await recordUserAction(username, 'deleted', quiz._id.toString(), quiz.title);
-
-    await quiz.deleteOne();
-
-    res.status(200).json({ message: 'Опрос удален' });
+      res.status(201).json(savedQuiz);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: error.message });
+      console.error(error);
+      res.status(400).json({ message: error.message });
   }
 });
 
@@ -134,6 +111,55 @@ router.post('/quizzes/:id', authMiddleware, async (req, res) => {
   } catch (error) {
     console.error('Ошибка при прохождении опроса:', error);
     res.status(500).json({ message: 'Ошибка при прохождении опроса' });
+  }
+});
+
+// Редактирование опроса
+router.put('/quizzes/:id', authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const { title, questions } = req.body;
+  const username = req.user.username;
+
+  try {
+      const quiz = await Quiz.findById(id);
+      if (!quiz) {
+          return res.status(404).json({ message: 'Опрос не найден' });
+      }
+
+      if (quiz.creator !== username) {
+          return res.status(403).json({ message: 'У вас нет прав на редактирование этого опроса' });
+      }
+
+      quiz.title = title;
+      quiz.questions = questions;
+      const updatedQuiz = await quiz.save();
+
+      res.status(200).json(updatedQuiz);
+  } catch (error) {
+      console.error('Ошибка при обновлении опроса:', error);
+      res.status(500).json({ message: 'Ошибка сервера' });
+  }
+});
+
+// Удаление опроса по ID
+router.delete('/quizzes/:id', authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const username = req.user.username;
+
+  try {
+    const quiz = await Quiz.findById(id);
+    if (!quiz) {
+      return res.status(404).json({ message: 'Опрос не найден' });
+    }
+
+    await recordUserAction(username, 'deleted', quiz._id.toString(), quiz.title);
+
+    await quiz.deleteOne();
+
+    res.status(200).json({ message: 'Опрос удален' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
   }
 });
 

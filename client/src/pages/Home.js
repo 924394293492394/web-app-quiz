@@ -10,6 +10,7 @@ const Home = () => {
       <QuizList />
       <button onClick={() => navigate('/create')}>Создать новый опрос</button>
       <button onClick={() => navigate('/delete')}>Удалить опрос</button>
+      <button onClick={() => navigate('/edit')}>Редактировать опрос</button> 
       <Logout />
     </div>
   );
