@@ -1,17 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 import QuizList from '../components/QuizList';
-import Logout from '../components/Logout';
 
 const Home = () => {
-  const navigate = useNavigate();
   return (
     <div>
+      <Header />
       <QuizList />
-      <button onClick={() => navigate('/create')}>Создать новый опрос</button>
-      <button onClick={() => navigate('/delete')}>Удалить опрос</button>
-      <button onClick={() => navigate('/edit')}>Редактировать опрос</button> 
-      <Logout />
     </div>
   );
 };

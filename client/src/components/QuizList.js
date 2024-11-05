@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchWithAuth } from './Auth';
+import '../styles/QuizList.css';
 
 function QuizList() {
     const [quizzes, setQuizzes] = useState([]);
@@ -37,14 +38,14 @@ function QuizList() {
     }
 
     return (
-        <div>
+        <div className="quiz-list-page">
             <h2>Список всех опросов</h2>
-            <ul>
+            <ul className="quiz-list">
                 {quizzes.map((quiz) => (
                     <li
                         key={quiz._id}
                         onClick={() => navigate(`/quiz/${quiz._id}`)}
-                        style={{ cursor: 'pointer', marginBottom: '5px', color: 'blue', textDecoration: 'underline' }}
+                        className="quiz-list-item"
                     >
                         {quiz.title}
                     </li>

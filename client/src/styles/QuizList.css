@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #5BA8A0;
+}
+
+.quiz-list-page {
+    padding: 20px;
+    background-color: #CBE54E;
+    width: 80%;
+    max-width: 1000px;
+    box-shadow: 0 4px 8px rgba(7, 21, 146, 1);
+    margin: 20px auto;
+    border-radius: 40px;
+    text-align: center;
+}
+
+.quiz-list-page h2 {
+    font-size: 24px;
+    color: #293013;
+    text-shadow: 0 4px 8px rgba(7, 21, 146, 1);
+    margin-bottom: 20px;
+}
+
+.quiz-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.quiz-list-item {
+    font-size: 18px;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #94B447;
+    border: 2px solid #CBE54E; 
+    border-radius: 5px;
+    cursor: pointer;
+    color: #3a4416da;
+    text-decoration: underline;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.quiz-list-item:hover {
+    background-color: rgba(206, 155, 14, 0.1);;
+    box-shadow: 0 4px 8px rgba(7, 21, 146, 1);
+    color: #1608d6b9;
+}

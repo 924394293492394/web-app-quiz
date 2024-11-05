@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background: url('../images/main-back-site.jpg') no-repeat center center fixed; 
+    background-size: cover;
+}
+
+.register-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.register-container {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 400px;
+}
+
+.register-container h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #293013;
+}
+
+.register-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.register-container .form-group {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.register-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.register-container input[type="text"],
+.register-container input[type="email"],
+.register-container input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    border: 2px solid #5D6E1E;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.register-container input[type="text"]{
+    margin-bottom: 0%;
+}
+
+.register-container button {
+    width: 100%; 
+    padding: 12px;
+    font-size: 18px;
+    background-color: #5D6E1E;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.register-container button:hover {
+    background-color: #4a5818;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+.register-container p {
+    margin-top: 10px;
+}
+
+.register-container a {
+    color: #1ca0ec;
+    text-decoration: none;
+}
+
+.register-container a:hover {
+    text-decoration: underline;
+}

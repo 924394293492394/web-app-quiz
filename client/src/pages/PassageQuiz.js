@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useQuizLogic from '../components/PassageQuizLogic';
+import Header from '../components/Header';
+import '../styles/QuizPage.css';
 
 const QuizPage = () => {
   const { id } = useParams();
@@ -52,37 +54,40 @@ const QuizPage = () => {
 
   return (
     <div>
-      <h1>{quiz.title}</h1>
-      {results ? (
-        <div>
-          <h2>Ваш результат:</h2>
-          <p>Вы набрали {results.score} из {results.total}</p>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit}>
-          {quiz.questions.map((question, index) => (
-            <div key={index}>
-              <h3>{question.question}</h3>
-              <ul>
-                {question.answers.map((answer, ansIndex) => (
-                  <li key={ansIndex}>
-                    <label>
-                      <input
-                        type="radio"
-                        name={`question-${index}`}
-                        checked={selectedAnswers[index] === ansIndex}
-                        onChange={() => handleAnswerChange(index, ansIndex)}
-                      />
-                      {answer}
-                    </label>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          <button type="submit">Отправить ответы</button>
-        </form>
-      )}
+      <Header />
+      <div className="quiz-container">
+        <h1>{quiz.title}</h1>
+        {results ? (
+          <div className="results">
+            <h2>Ваш результат:</h2>
+            <p>Вы набрали {results.score} из {results.total}</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="quiz-form">
+            {quiz.questions.map((question, index) => (
+              <div key={index} className="question-block">
+                <h3>{question.question}</h3>
+                <ul className="answers-list">
+                  {question.answers.map((answer, ansIndex) => (
+                    <li key={ansIndex} className="answer-item">
+                      <label>
+                        <input
+                          type="radio"
+                          name={`question-${index}`}
+                          checked={selectedAnswers[index] === ansIndex}
+                          onChange={() => handleAnswerChange(index, ansIndex)}
+                        />
+                        {answer}
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            <button type="submit" className="submit-button">Отправить ответы</button>
+          </form>
+        )}
+      </div>
     </div>
   );
 };

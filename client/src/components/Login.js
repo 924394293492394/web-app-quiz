@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import '../styles/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -37,29 +38,31 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Вход</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Пароль"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Войти</button>
-      </form>
-      {error && <p>{error}</p>}
-      <p>
-        Нет аккаунта? <Link to="/register">Создать аккаунт</Link>
-      </p>
+    <div className="login-page">
+      <div className="login-container">
+        <h2>Вход</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Электронная почта"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Пароль"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Войти</button>
+        </form>
+        {error && <p className="error-message">{error}</p>}
+        <p>
+          Нет аккаунта? <Link to="/register">Создать аккаунт</Link>
+        </p>
+      </div>
     </div>
   );
 };

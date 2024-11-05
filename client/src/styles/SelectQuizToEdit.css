@@ -1,0 +1,40 @@
+body {
+    background-color: #5BA8A0;
+    margin: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.edit-highlight-zone {
+    border: 5px solid #5ba8a093;
+    padding: 20px;
+    background-color: #CBE54E;
+    width: 80%;
+    max-width: 1000px;
+    box-shadow: 0 4px 8px rgba(7, 21, 146, 1);
+    overflow: auto;
+    margin: 20px auto;
+    border-radius: 40px;
+    text-align: center;
+}
+
+.select-quiz-page select,
+.select-quiz-page button {
+    display: block;
+    width: 60%;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.select-quiz-page button {
+    background-color: #5D6E1E;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.select-quiz-page button:disabled {
+    background-color: #a5a5a5;
+    cursor: not-allowed;
+}

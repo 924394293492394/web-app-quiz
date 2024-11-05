@@ -1,19 +1,19 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+// import React from 'react';
+// import { useNavigate } from 'react-router-dom';
 
-const Logout = () => {
-  const navigate = useNavigate();
+// const Logout = () => {
+//   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
+//   const handleLogout = () => {
+//     localStorage.removeItem('token');
+//     navigate('/login');
+//   };
 
-  return (
-    <button onClick={handleLogout}>
-      Выйти
-    </button>
-  );
-};
+//   return (
+//     <button onClick={handleLogout}>
+//       Выйти
+//     </button>
+//   );
+// };
 
-export default Logout;
+// export default Logout;
