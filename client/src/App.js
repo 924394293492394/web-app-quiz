@@ -9,7 +9,7 @@ import DeleteQuiz from './pages/DeleteQuiz';
 import SelectQuizToEditPage from './pages/SelectQuizToEditPage';
 import EditQuizPage from './pages/EditQuiz';
 import PrivateRoute from './components/PrivateRoute';
-import UserProfile from './components/UserProfile';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -69,7 +69,7 @@ function App() {
           path="/profile"
           element={
             <PrivateRoute>
-              <UserProfile />
+              <Profile />
             </PrivateRoute>
           }
         />
