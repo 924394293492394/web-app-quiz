@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import { useParams } from 'react-router-dom';
-import { useEditQuizLogic } from '../components/EditQuizLogic';
+import { useEditQuizLogic } from '../components/logics/EditQuizLogic';
 import '../styles/EditQuiz.css';
 
 const EditQuiz = () => {

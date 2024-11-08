@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchWithAuth } from './Auth';
-import '../styles/QuizList.css';
+import { fetchWithAuth } from './auth/Auth';
 
-function QuizList() {
-    const [quizzes, setQuizzes] = useState([]);
+function QuizList({ quizzes, onUpdateQuizzes }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -12,10 +10,10 @@ function QuizList() {
     useEffect(() => {
         async function loadQuizzes() {
             try {
-                const response = await fetchWithAuth('http://192.168.0.10:5000/api/quizzes');
+                const response = await fetchWithAuth(`${process.env.REACT_APP_SERVER_URL}/api/quizzes`);
                 if (response.ok) {
                     const data = await response.json();
-                    setQuizzes(data);
+                    onUpdateQuizzes(data);
                 } else {
                     setError('Ошибка при загрузке данных');
                 }
@@ -25,9 +23,9 @@ function QuizList() {
                 setLoading(false);
             }
         }
-    
+
         loadQuizzes();
-    }, []);    
+    }, [onUpdateQuizzes]);
 
     if (loading) {
         return <div>Загрузка...</div>;
@@ -35,6 +33,10 @@ function QuizList() {
 
     if (error) {
         return <div>{error}</div>;
+    }
+
+    if (!quizzes.length) {
+        return <div className="no-quizzes-message">Нет доступных опросов</div>;
     }
 
     return (

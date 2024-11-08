@@ -1,0 +1,32 @@
+.about-container {
+    padding: 20px;
+    background-color: #CBE54E;
+    width: 80%;
+    max-width: 1000px;
+    box-shadow: 0 4px 8px rgba(7, 21, 146, 1);
+    margin: 20px auto;
+    border-radius: 40px;
+    text-align: left;
+}
+
+.about-container h1 {
+    font-size: 24px;
+    color: #293013;
+    text-shadow: 0 4px 8px rgba(7, 21, 146, 1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.about-container p {
+    font-size: 18px;
+    color: #293013;
+    text-align: center;
+}
+
+.about-image {
+    display: block;
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(7, 21, 146, 1);
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import { useCreateQuizLogic } from '../components/CreateQuizLogic';
+import { useCreateQuizLogic } from '../components/logics/CreateQuizLogic';
 import '../styles/CreateQuiz.css';
 
 const CreateQuizPage = () => {

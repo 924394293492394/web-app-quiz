@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import useProfileLogic from '../components/ProfileLogic';
+import useProfileLogic from '../components/logics/ProfileLogic';
 import '../styles/Profile.css';
 import logo from '../images/profile-photo.jpg';
 

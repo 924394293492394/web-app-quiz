@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import useDeleteQuizLogic from '../components/DeleteQuizLogic';
+import useDeleteQuizLogic from '../components/logics/DeleteQuizLogic';
 import '../styles/DeleteQuiz.css';
 
 const DeleteQuiz = () => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import useQuizLogic from '../components/PassageQuizLogic';
+import useQuizLogic from '../components/logics/PassageQuizLogic';
 import Header from '../components/Header';
-import '../styles/QuizPage.css';
+import '../styles/PassageQuiz.css';
 
 const QuizPage = () => {
   const { id } = useParams();

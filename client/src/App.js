@@ -1,15 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
-import Register from './components/Register';
-import Home from './pages/Home';
-import CreateQuiz from './pages/CreateQuiz';
-import PassagePage from './pages/PassageQuiz';
-import DeleteQuiz from './pages/DeleteQuiz';
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import PrivateRoute from './components/auth/PrivateRoute';
 import SelectQuizToEditPage from './pages/SelectQuizToEditPage';
+import PassagePage from './pages/PassageQuiz';
+import CreateQuiz from './pages/CreateQuiz';
+import DeleteQuiz from './pages/DeleteQuiz';
 import EditQuizPage from './pages/EditQuiz';
-import PrivateRoute from './components/PrivateRoute';
 import Profile from './pages/Profile';
+import Contact from './pages/Contact';
+import About from './pages/About';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -62,6 +64,22 @@ function App() {
           element={
             <PrivateRoute>
               <EditQuizPage />
+            </PrivateRoute>
+          }
+        />
+                <Route
+          path="/about"
+          element={
+            <PrivateRoute>
+              <About />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <PrivateRoute>
+              <Contact />
             </PrivateRoute>
           }
         />

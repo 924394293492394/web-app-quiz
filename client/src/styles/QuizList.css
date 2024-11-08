@@ -41,6 +41,13 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
+.no-quizzes-message { 
+    font-size: 1.5rem; 
+    color: #ff0000; 
+    text-align: center; 
+    margin-top: 20px; 
+}
+
 .quiz-list-item:hover {
     background-color: rgba(206, 155, 14, 0.1);;
     box-shadow: 0 4px 8px rgba(7, 21, 146, 1);
